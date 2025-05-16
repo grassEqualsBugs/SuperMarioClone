@@ -20,7 +20,22 @@ Promise.all([createMario(), loadLevel("1-1")]).then(async ([mario, level]) => {
 			mario.jump.cancel();
 		}
 	});
+	input.addMapping("ArrowRight", (keyState) => {
+		mario.go.dir = keyState;
+	});
+	input.addMapping("ArrowLeft", (keyState) => {
+		mario.go.dir = -keyState;
+	});
 	input.listenTo(window);
+
+	["mousedown", "mousemove"].forEach((eventName) => {
+		canvas.addEventListener(eventName, (event) => {
+			if (event.buttons === 1) {
+				mario.vel.set(0, 0);
+				mario.pos.set(event.offsetX, event.offsetY);
+			}
+		});
+	});
 
 	// game timer
 	const timer = new Timer(1 / 60);

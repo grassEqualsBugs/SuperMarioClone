@@ -16,8 +16,8 @@ export default class KeyboardState {
 		if (!this.keyMap.has(key)) return;
 		event.preventDefault();
 
-		const keyState = event.type == "keydown" ? PRESSED : RELEASED;
-		if (this.keyStates.get(key) == keyState) {
+		const keyState = event.type === "keydown" ? PRESSED : RELEASED;
+		if (this.keyStates.get(key) === keyState) {
 			return;
 		}
 		this.keyStates.set(key, keyState);

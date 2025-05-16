@@ -20,3 +20,34 @@ export function createSpriteLayer(entities) {
 		});
 	};
 }
+
+export function createCollisionLayer(level) {
+	const resolvedTiles = [];
+
+	const tileResolver = level.tileCollider.tiles;
+	const tileSize = tileResolver.tileSize;
+
+	const getByIndexOriginal = tileResolver.getByIndex;
+	tileResolver.getByIndex = function getByIndexFake(x, y) {
+		resolvedTiles.push({ x, y });
+		// pass "this" through
+		return getByIndexOriginal.call(tileResolver, x, y);
+	};
+
+	return function drawCollisions(context) {
+		context.strokeStyle = "blue";
+		resolvedTiles.forEach(({ x, y }) => {
+			context.strokeRect(x * tileSize, y * tileSize, tileSize, tileSize);
+		});
+		context.strokeStyle = "red";
+		level.entities.forEach((entity) => {
+			context.strokeRect(
+				entity.pos.x,
+				entity.pos.y,
+				entity.size.x,
+				entity.size.y,
+			);
+		});
+		resolvedTiles.length = 0;
+	};
+}

@@ -1,5 +1,9 @@
 import Level from "./Level.js";
-import { createBackgroundLayer, createSpriteLayer } from "./layers.js";
+import {
+	createBackgroundLayer,
+	createSpriteLayer,
+	createCollisionLayer,
+} from "./layers.js";
 import { loadBackgroundSprites } from "./sprites.js";
 
 export async function loadImage(url) {
@@ -38,9 +42,13 @@ export async function loadLevel(name) {
 	const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
 	level.comp.layers.push(backgroundLayer);
 
-	// add sprite layer to COmpositor
+	// add sprite layer to Compositor
 	const spriteLayer = createSpriteLayer(level.entities);
 	level.comp.layers.push(spriteLayer);
+
+	// add debug collision layer to Compositor
+	const collisionLayer = createCollisionLayer(level);
+	level.comp.layers.push(collisionLayer);
 
 	return level;
 }
