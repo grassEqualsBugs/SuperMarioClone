@@ -7,11 +7,11 @@ const canvas = document.getElementById("screen");
 const context = canvas.getContext("2d");
 
 Promise.all([createMario(), loadLevel("1-1")]).then(async ([mario, level]) => {
-	const gravity = 2000;
+	const gravity = 1400;
 	mario.pos.set(64, 80);
-
 	level.entities.add(mario);
 
+	// mario jumping
 	const input = new Keyboard();
 	input.addMapping(" ", (keyState) => {
 		if (keyState) {
@@ -22,6 +22,7 @@ Promise.all([createMario(), loadLevel("1-1")]).then(async ([mario, level]) => {
 	});
 	input.listenTo(window);
 
+	// game timer
 	const timer = new Timer(1 / 60);
 	timer.update = function update(deltaTime) {
 		level.update(deltaTime);
