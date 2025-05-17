@@ -1,10 +1,10 @@
 import Level from "./Level.js";
+import SpriteSheet from "./SpriteSheet.js";
 import {
 	createBackgroundLayer,
 	createSpriteLayer,
 	createCollisionLayer,
 } from "./layers.js";
-import { loadBackgroundSprites } from "./sprites.js";
 
 export async function loadImage(url) {
 	return new Promise((resolve) => {
@@ -12,6 +12,11 @@ export async function loadImage(url) {
 		image.addEventListener("load", () => resolve(image));
 		image.src = url;
 	});
+}
+
+export async function loadJSON(url) {
+	const response = await fetch(url);
+	return await response.json();
 }
 
 function createTiles(level, backgrounds) {
@@ -41,12 +46,19 @@ function createTiles(level, backgrounds) {
 	});
 }
 
+export async function loadSpriteSheet(name) {
+	const sheetSpec = await loadJSON(`/sprites/${name}.json`);
+	const image = await loadImage(sheetSpec.imageURL);
+	const sprites = new SpriteSheet(image, sheetSpec.tileW, sheetSpec.tileH);
+	sheetSpec.tiles.forEach((tileSpec) => {
+		sprites.defineTile(tileSpec.name, tileSpec.index[0], tileSpec.index[1]);
+	});
+	return sprites;
+}
+
 export async function loadLevel(name) {
-	const response = await fetch(`levels/${name}.json`);
-	const [levelSpec, backgroundSprites] = await Promise.all([
-		response.json(),
-		loadBackgroundSprites(),
-	]);
+	const levelSpec = await loadJSON(`levels/${name}.json`);
+	const backgroundSprites = await loadSpriteSheet(levelSpec.spritesheet);
 
 	const level = new Level();
 	createTiles(level, levelSpec.backgrounds);
