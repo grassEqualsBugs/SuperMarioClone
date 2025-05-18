@@ -1,10 +1,10 @@
 import Entity from "./Entity.js";
 import Go from "./traits/Go.js";
 import Jump from "./traits/Jump.js";
-import { loadMarioSprites } from "./sprites.js";
+import { loadSpriteSheet } from "./loaders.js";
 
 export async function createMario() {
-	const sprite = await loadMarioSprites();
+	const sprite = await loadSpriteSheet("mario");
 	const mario = new Entity();
 	mario.size.set(14, 16);
 

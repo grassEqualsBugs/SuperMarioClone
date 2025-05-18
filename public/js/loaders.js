@@ -51,9 +51,20 @@ export async function loadSpriteSheet(name) {
 	const sheetSpec = await loadJSON(`/sprites/${name}.json`);
 	const image = await loadImage(sheetSpec.imageURL);
 	const sprites = new SpriteSheet(image, sheetSpec.tileW, sheetSpec.tileH);
-	sheetSpec.tiles.forEach((tileSpec) => {
-		sprites.defineTile(tileSpec.name, tileSpec.index[0], tileSpec.index[1]);
-	});
+	if (sheetSpec.tiles) {
+		sheetSpec.tiles.forEach((tileSpec) => {
+			sprites.defineTile(
+				tileSpec.name,
+				tileSpec.index[0],
+				tileSpec.index[1],
+			);
+		});
+	}
+	if (sheetSpec.frames) {
+		sheetSpec.frames.forEach((frameSpec) => {
+			sprites.define(frameSpec.name, ...frameSpec.rect);
+		});
+	}
 	return sprites;
 }
 
