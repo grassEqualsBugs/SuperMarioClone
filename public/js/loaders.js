@@ -1,10 +1,7 @@
 import Level from "./Level.js";
 import SpriteSheet from "./SpriteSheet.js";
-import {
-	createBackgroundLayer,
-	createSpriteLayer,
-	createCollisionLayer,
-} from "./layers.js";
+import { createBackgroundLayer, createSpriteLayer } from "./layers.js";
+import { createAnim } from "./anim.js";
 
 export async function loadImage(url) {
 	return new Promise((resolve) => {
@@ -63,6 +60,12 @@ export async function loadSpriteSheet(name) {
 	if (sheetSpec.frames) {
 		sheetSpec.frames.forEach((frameSpec) => {
 			sprites.define(frameSpec.name, ...frameSpec.rect);
+		});
+	}
+	if (sheetSpec.animations) {
+		sheetSpec.animations.forEach((animSpec) => {
+			const animation = createAnim(animSpec.frames, animSpec.frameLength);
+			sprites.defineAnim(animSpec.name, animation);
 		});
 	}
 	return sprites;

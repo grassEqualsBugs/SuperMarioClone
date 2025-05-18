@@ -10,20 +10,20 @@ const canvas = document.getElementById("screen");
 const context = canvas.getContext("2d");
 
 Promise.all([createMario(), loadLevel("1-1")]).then(async ([mario, level]) => {
-	const camera = new Camera();
-	window.camera = camera;
-
 	mario.pos.set(64, 80);
 	level.entities.add(mario);
 
-	// Debug layers
-	level.comp.layers.push(
-		createCollisionLayer(level),
-		createCameraLayer(camera),
-	);
-
 	const input = setupKeyboard(mario);
 	input.listenTo(window);
+
+	const camera = new Camera();
+	window.camera = camera;
+
+	// Debug layers
+	level.comp.layers.push(
+		// createCollisionLayer(level),
+		createCameraLayer(camera),
+	);
 
 	setupMouseControl(canvas, mario, camera);
 
