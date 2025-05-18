@@ -72,9 +72,5 @@ export async function loadLevel(name) {
 	const spriteLayer = createSpriteLayer(level.entities);
 	level.comp.layers.push(spriteLayer);
 
-	// add debug collision layer to Compositor
-	const collisionLayer = createCollisionLayer(level);
-	level.comp.layers.push(collisionLayer);
-
 	return level;
 }
