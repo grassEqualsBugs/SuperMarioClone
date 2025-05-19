@@ -7,14 +7,25 @@ import { createAnim } from "./anim.js";
 export async function createMario() {
 	const sprite = await loadSpriteSheet("mario");
 	const mario = new Entity();
-	mario.size.set(14, 16);
+	mario.size.set(13.2, 16);
 
 	mario.addTrait(new Go());
 	mario.addTrait(new Jump());
 
-	const runAnim = createAnim(["run-1", "run-2", "run-3"], 5);
+	const runAnim = createAnim(["run-1", "run-2", "run-3"], 10);
 	function routeFrame(mario) {
-		if (mario.go.dir !== 0) return runAnim(mario.go.distance);
+		if (!mario.jump.ready) {
+			return "jump";
+		}
+		if (mario.go.distance > 0) {
+			if (
+				(mario.vel.x > 0 && mario.go.dir < 0) ||
+				(mario.vel.x < 0 && mario.go.dir > 0)
+			) {
+				return "brake";
+			}
+			return runAnim(mario.go.distance);
+		}
 		return "idle";
 	}
 

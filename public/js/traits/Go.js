@@ -5,19 +5,30 @@ export default class Go extends Trait {
 		super("go");
 
 		this.dir = 0;
-		this.speed = 6000;
+		this.acceleration = 400;
+		this.deceleration = 300;
+		this.dragFactor = 1 / 5000;
 		this.distance = 0;
 		this.heading = 1;
 	}
 
 	update(parentEntity, deltaTime) {
-		parentEntity.vel.x = this.speed * this.dir * deltaTime;
-		if (this.dir) {
+		const absX = Math.abs(parentEntity.vel.x);
+		if (this.dir !== 0) {
+			// integrate acceleration with respect to time to get velocity
+			parentEntity.vel.x += this.acceleration * deltaTime * this.dir;
 			this.heading = this.dir;
 			// integrate velocity with respect to time to get total distance
-			this.distance += Math.abs(parentEntity.vel.x * deltaTime);
+		} else if (parentEntity.vel.x !== 0) {
+			const decel = Math.min(absX, this.deceleration * deltaTime);
+			parentEntity.vel.x += parentEntity.vel.x > 0 ? -decel : decel;
 		} else {
 			this.distance = 0;
 		}
+
+		const drag = this.dragFactor * parentEntity.vel.x * absX;
+		parentEntity.vel.x -= drag;
+
+		this.distance += absX * deltaTime;
 	}
 }

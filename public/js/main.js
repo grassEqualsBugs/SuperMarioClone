@@ -1,36 +1,37 @@
 import Timer from "./Timer.js";
 import Camera from "./Camera.js";
-import { setupMouseControl } from "./debug.js";
 import { loadLevel } from "./loaders.js";
-import { createCollisionLayer, createCameraLayer } from "./layers.js";
 import { createMario } from "./entities.js";
 import { setupKeyboard } from "./input.js";
 
 const canvas = document.getElementById("screen");
 const context = canvas.getContext("2d");
+context.imageSmoothingEnabled = false;
 
 Promise.all([createMario(), loadLevel("1-1")]).then(async ([mario, level]) => {
 	mario.pos.set(64, 80);
 	level.entities.add(mario);
 
+	let paused = false;
+
 	const input = setupKeyboard(mario);
+	input.addMapping(" ", (e) => {
+		paused = !paused;
+	});
 	input.listenTo(window);
 
 	const camera = new Camera();
 	window.camera = camera;
 
-	// Debug layers
-	level.comp.layers.push(
-		// createCollisionLayer(level),
-		createCameraLayer(camera),
-	);
-
-	setupMouseControl(canvas, mario, camera);
-
-	// Game timer
 	const timer = new Timer(1 / 60);
 	timer.update = function update(deltaTime) {
-		level.update(deltaTime);
+		if (!paused) {
+			level.update(deltaTime);
+
+			if (mario.pos.x > 100) {
+				camera.pos.x = mario.pos.x - 100;
+			}
+		}
 		level.comp.draw(context, camera);
 	};
 

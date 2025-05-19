@@ -2,18 +2,18 @@ import Keyboard from "./KeyboardState.js";
 
 export function setupKeyboard(entity) {
 	const input = new Keyboard();
-	input.addMapping(" ", (keyState) => {
+	input.addMapping("p", (keyState) => {
 		if (keyState) {
 			entity.jump.start();
 		} else {
 			entity.jump.cancel();
 		}
 	});
-	input.addMapping("ArrowRight", (keyState) => {
-		entity.go.dir = keyState;
+	input.addMapping("d", (keyState) => {
+		entity.go.dir += keyState ? 1 : -1;
 	});
-	input.addMapping("ArrowLeft", (keyState) => {
-		entity.go.dir = -keyState;
+	input.addMapping("a", (keyState) => {
+		entity.go.dir += -keyState ? -1 : 1;
 	});
 	return input;
 }
