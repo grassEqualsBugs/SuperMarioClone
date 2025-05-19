@@ -1,25 +1,117 @@
 {
 	"spritesheet": "overworld",
-	"backgrounds": [
+
+	"patterns": {
+		"cloud-single": {
+			"tiles": [
+				{
+					"name": "cloud-1-1",
+					"ranges": [[0, 0]]
+				},
+				{
+					"name": "cloud-1-2",
+					"ranges": [[1, 0]]
+				},
+				{
+					"name": "cloud-1-3",
+					"ranges": [[2, 0]]
+				},
+				{
+					"name": "cloud-2-1",
+					"ranges": [[0, 1]]
+				},
+				{
+					"name": "cloud-2-2",
+					"ranges": [[1, 1]]
+				},
+				{
+					"name": "cloud-2-3",
+					"ranges": [[2, 1]]
+				}
+			]
+		},
+
+		"pipe-section-vert": {
+			"tiles": [
+				{
+					"name": "pipe-vert-left",
+					"type": "ground",
+					"ranges": [[0, 0]]
+				},
+				{
+					"name": "pipe-vert-right",
+					"type": "ground",
+					"ranges": [[1, 0]]
+				}
+			]
+		},
+
+		"pipe-cap-vert": {
+			"tiles": [
+				{
+					"name": "pipe-insert-vert-left",
+					"type": "ground",
+					"ranges": [[0, 0]]
+				},
+				{
+					"name": "pipe-insert-vert-right",
+					"type": "ground",
+					"ranges": [[1, 0]]
+				}
+			]
+		},
+
+		"pipe-2h": {
+			"tiles": [
+				{
+					"pattern": "pipe-cap-vert",
+					"ranges": [[0, 0]]
+				},
+				{
+					"pattern": "pipe-section-vert",
+					"ranges": [[0, 1, 1, 1]]
+				}
+			]
+		},
+
+		"pipe-3h": {
+			"tiles": [
+				{
+					"pattern": "pipe-cap-vert",
+					"ranges": [[0, 0]]
+				},
+				{
+					"pattern": "pipe-section-vert",
+					"ranges": [[0, 1, 1, 2]]
+				}
+			]
+		},
+
+		"pipe-4h": {
+			"tiles": [
+				{
+					"pattern": "pipe-cap-vert",
+					"ranges": [[0, 0]]
+				},
+				{
+					"pattern": "pipe-section-vert",
+					"ranges": [[0, 1, 1, 3]]
+				}
+			]
+		}
+	},
+	"tiles": [
 		{
-			"tile": "sky",
+			"name": "sky",
 			"ranges": [[0, 212, 0, 13]]
 		},
 		{
-			"tile": "ground",
+			"name": "ground",
 			"type": "ground",
 			"ranges": [[0, 212, 13, 2]]
 		},
 		{
-			"tile": "sky",
-			"ranges": [
-				[75, 2, 13, 2],
-				[92, 2, 13, 2],
-				[157, 2, 13, 2]
-			]
-		},
-		{
-			"tile": "ground",
+			"name": "ground",
 			"type": "ground",
 			"ranges": [
 				[5, 3, 9, 1],
@@ -33,7 +125,7 @@
 			]
 		},
 		{
-			"tile": "bricks",
+			"name": "bricks",
 			"type": "ground",
 			"ranges": [
 				[27, 5, 9],
@@ -50,10 +142,11 @@
 			]
 		},
 		{
-			"tile": "chance",
+			"name": "chance",
 			"type": "ground",
 			"ranges": [
 				[2, 2],
+
 				[23, 9],
 				[28, 9],
 				[30, 9],
@@ -72,7 +165,7 @@
 			]
 		},
 		{
-			"tile": "chocolate",
+			"name": "chocolate",
 			"type": "ground",
 			"ranges": [
 				[141, 1, 9],
@@ -103,6 +196,23 @@
 				[186, 7, 10],
 				[185, 8, 11],
 				[184, 9, 12]
+			]
+		},
+
+		{
+			"pattern": "cloud-single",
+			"ranges": [
+				[25, 2],
+				[35, 3],
+				[44, 2],
+				[64, 3],
+				[74, 2],
+				[80, 3],
+				[90, 2],
+				[108, 3],
+				[118, 2],
+				[128, 3],
+				[138, 2]
 			]
 		}
 	]
