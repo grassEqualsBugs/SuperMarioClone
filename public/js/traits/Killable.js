@@ -8,6 +8,11 @@ export default class Killable extends Trait {
 		this.removeAfter = 2;
 	}
 
+	revive() {
+		this.dead = false;
+		this.deadTime = 0;
+	}
+
 	kill() {
 		this.dead = true;
 	}

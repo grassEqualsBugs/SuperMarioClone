@@ -17,9 +17,13 @@ class Behavior extends Trait {
 		if (us.killable.dead) return;
 
 		if (them.stomper) {
-			us.killable.kill();
-			them.stomper.bounce();
-			us.pendulumWalk.speed = 0;
+			if (them.vel.y > us.vel.y) {
+				us.killable.kill();
+				them.stomper.bounce();
+				us.pendulumWalk.speed = 0;
+			} else {
+				them.killable.kill();
+			}
 		}
 	}
 }

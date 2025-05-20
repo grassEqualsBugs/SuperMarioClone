@@ -58,4 +58,6 @@ export default class Entity {
 		}
 		this.lifetime += deltaTime;
 	}
+
+	draw(context) {}
 }
