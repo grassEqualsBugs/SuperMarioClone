@@ -8,19 +8,21 @@ export default class Killable extends Trait {
 		this.removeAfter = 2;
 	}
 
+	kill() {
+		this.queue(() => (this.dead = true));
+	}
+
 	revive() {
 		this.dead = false;
 		this.deadTime = 0;
 	}
 
-	kill() {
-		this.dead = true;
-	}
-
 	update(entity, deltaTime, level) {
 		if (this.dead) this.deadTime += deltaTime;
 		if (this.deadTime > this.removeAfter) {
-			level.entities.delete(entity);
+			this.queue(() => {
+				level.entities.delete(entity);
+			});
 		}
 	}
 }

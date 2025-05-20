@@ -3,18 +3,18 @@ import { Trait } from "../Entity.js";
 export default class Stomper extends Trait {
 	constructor() {
 		super("stomper");
-		this.queueBounce = false;
-		this.bounceSpeed = 24000;
+		this.bounceSpeed = 400;
 	}
 
-	bounce() {
-		this.queueBounce = true;
+	bounce(us, them) {
+		us.bounds.bottom = them.bounds.top;
+		us.vel.y = -this.bounceSpeed;
 	}
 
-	update(entity, deltaTime) {
-		if (this.queueBounce) {
-			entity.vel.y = -this.bounceSpeed * deltaTime;
-			this.queueBounce = false;
+	collides(us, them) {
+		if (!them.killable) return;
+		if (!them.killable.dead && us.vel.y > them.vel.y) {
+			this.bounce(us, them);
 		}
 	}
 }

@@ -19,19 +19,26 @@ export default class Level {
 	}
 
 	update(deltaTime) {
+		// update all entities
 		for (const entity of this.entities) {
 			entity.update(deltaTime, this);
 
 			entity.pos.x += entity.vel.x * deltaTime;
-			this.tileCollider.checkX(entity);
+			if (entity.canCollide) this.tileCollider.checkX(entity);
 			entity.pos.y += entity.vel.y * deltaTime;
-			this.tileCollider.checkY(entity);
+			if (entity.canCollide) this.tileCollider.checkY(entity);
 
 			entity.vel.y += this.gravity * deltaTime;
 		}
 
+		// check for entity collisions
 		for (const entity of this.entities) {
-			this.entityCollider.check(entity);
+			if (entity.canCollide) this.entityCollider.check(entity);
+		}
+
+		// finalize all updating of traits
+		for (const entity of this.entities) {
+			entity.finalize();
 		}
 
 		this.totalTime += deltaTime;

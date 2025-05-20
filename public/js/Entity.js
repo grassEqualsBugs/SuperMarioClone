@@ -11,6 +11,16 @@ export const Sides = {
 export class Trait {
 	constructor(name) {
 		this.NAME = name;
+		this.tasks = [];
+	}
+
+	finalize() {
+		for (const task of this.tasks) task();
+		this.tasks.length = 0;
+	}
+
+	queue(task) {
+		this.tasks.push(task);
 	}
 
 	collides(us, them) {}
@@ -32,6 +42,7 @@ export default class Entity {
 
 		this.traits = [];
 
+		this.canCollide = true;
 		this.lifetime = 0;
 	}
 
@@ -57,6 +68,12 @@ export default class Entity {
 			trait.update(this, deltaTime, level);
 		}
 		this.lifetime += deltaTime;
+	}
+
+	finalize() {
+		for (const trait of this.traits) {
+			trait.finalize();
+		}
 	}
 
 	draw(context) {}
