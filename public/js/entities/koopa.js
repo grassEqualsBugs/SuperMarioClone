@@ -1,8 +1,9 @@
 import Entity, { Trait } from "../Entity.js";
-import { loadSpriteSheet } from "../loaders.js";
 import PendulumMove from "../traits/PendulumMove.js";
 import Killable from "../traits/Killable.js";
 import Solid from "../traits/Solid.js";
+import Physics from "../traits/Physics.js";
+import { loadSpriteSheet } from "../loaders.js";
 
 export async function loadKoopa() {
 	const sprite = await loadSpriteSheet("koopa");
@@ -111,6 +112,7 @@ function createKoopaFactory(sprite) {
 		koopa.collisionOffset.y = 8;
 
 		koopa.addTrait(new Solid());
+		koopa.addTrait(new Physics());
 		koopa.addTrait(new PendulumMove());
 		koopa.addTrait(new Killable());
 		koopa.killable.removeAfter = 2;

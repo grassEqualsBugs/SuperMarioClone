@@ -22,13 +22,6 @@ export default class Level {
 		// update all entities
 		for (const entity of this.entities) {
 			entity.update(deltaTime, this);
-
-			entity.pos.x += entity.vel.x * deltaTime;
-			this.tileCollider.checkX(entity);
-			entity.pos.y += entity.vel.y * deltaTime;
-			this.tileCollider.checkY(entity);
-
-			entity.vel.y += this.gravity * deltaTime;
 		}
 
 		// check for entity collisions
