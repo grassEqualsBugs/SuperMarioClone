@@ -5,7 +5,7 @@ import PlayerController from "./traits/PlayerController.js";
 import { createLevelLoader } from "./loaders/level.js";
 import { loadEntities } from "./entities.js";
 import { setupKeyboard } from "./input.js";
-import { createCameraLayer, createCollisionLayer } from "./layers.js";
+import { createCollisionLayer } from "./layers.js";
 
 function createPlayerEnv(playerEntity) {
 	const playerEnv = new Entity();
