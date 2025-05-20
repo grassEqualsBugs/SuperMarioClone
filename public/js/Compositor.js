@@ -4,8 +4,8 @@ export default class Compositor {
 	}
 
 	draw(context, camera) {
-		this.layers.forEach((layer) => {
+		for (const layer of this.layers) {
 			layer(context, camera);
-		});
+		}
 	}
 }

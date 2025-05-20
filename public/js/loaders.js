@@ -19,24 +19,24 @@ export async function loadSpriteSheet(name) {
 	const image = await loadImage(sheetSpec.imageURL);
 	const sprites = new SpriteSheet(image, sheetSpec.tileW, sheetSpec.tileH);
 	if (sheetSpec.tiles) {
-		sheetSpec.tiles.forEach((tileSpec) => {
+		for (const tileSpec of sheetSpec.tiles) {
 			sprites.defineTile(
 				tileSpec.name,
 				tileSpec.index[0],
 				tileSpec.index[1],
 			);
-		});
+		}
 	}
 	if (sheetSpec.frames) {
-		sheetSpec.frames.forEach((frameSpec) => {
+		for (const frameSpec of sheetSpec.frames) {
 			sprites.define(frameSpec.name, ...frameSpec.rect);
-		});
+		}
 	}
 	if (sheetSpec.animations) {
-		sheetSpec.animations.forEach((animSpec) => {
+		for (const animSpec of sheetSpec.animations) {
 			const animation = createAnim(animSpec.frames, animSpec.frameLength);
 			sprites.defineAnim(animSpec.name, animation);
-		});
+		}
 	}
 	return sprites;
 }

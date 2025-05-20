@@ -51,7 +51,7 @@ export function createSpriteLayer(entities, width = 64, height = 64) {
 	const spriteBufferContext = spriteBuffer.getContext("2d");
 
 	return function drawSpriteLayer(context, camera) {
-		entities.forEach((entity) => {
+		for (const entity of entities) {
 			spriteBufferContext.clearRect(0, 0, width, height);
 			entity.draw(spriteBufferContext);
 			context.drawImage(
@@ -59,7 +59,7 @@ export function createSpriteLayer(entities, width = 64, height = 64) {
 				entity.pos.x - camera.pos.x,
 				entity.pos.y - camera.pos.y,
 			);
-		});
+		}
 	};
 }
 
@@ -78,23 +78,23 @@ export function createCollisionLayer(level) {
 
 	return function drawCollisions(context, camera) {
 		context.strokeStyle = "blue";
-		resolvedTiles.forEach(({ x, y }) => {
+		for (const { x, y } of resolvedTiles) {
 			context.strokeRect(
 				x * tileSize - camera.pos.x,
 				y * tileSize - camera.pos.y,
 				tileSize,
 				tileSize,
 			);
-		});
+		}
 		context.strokeStyle = "red";
-		level.entities.forEach((entity) => {
+		for (const entity of level.entities) {
 			context.strokeRect(
 				entity.pos.x - camera.pos.x,
 				entity.pos.y - camera.pos.y,
 				entity.size.x,
 				entity.size.y,
 			);
-		});
+		}
 		resolvedTiles.length = 0;
 	};
 }

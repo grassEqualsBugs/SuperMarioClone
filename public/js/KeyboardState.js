@@ -25,10 +25,10 @@ export default class KeyboardState {
 	}
 
 	listenTo(window) {
-		["keydown", "keyup"].forEach((eventName) => {
+		for (const eventName of ["keydown", "keyup"]) {
 			window.addEventListener(eventName, (event) => {
 				this.handleEvent(event);
 			});
-		});
+		}
 	}
 }

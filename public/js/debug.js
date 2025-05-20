@@ -1,7 +1,7 @@
 export function setupMouseControl(canvas, entity, camera) {
 	let lastEvent;
 
-	["mousedown", "mousemove"].forEach((eventName) => {
+	for (const eventName of ["mousedown", "mousemove"]) {
 		canvas.addEventListener(eventName, (event) => {
 			if (event.buttons === 1) {
 				entity.vel.set(0, 0);
@@ -19,7 +19,7 @@ export function setupMouseControl(canvas, entity, camera) {
 			}
 			lastEvent = event;
 		});
-	});
+	}
 
 	canvas.addEventListener("contextmenu", (event) => {
 		event.preventDefault();

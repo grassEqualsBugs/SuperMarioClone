@@ -32,14 +32,14 @@ export default class Entity {
 	}
 
 	obstruct(side) {
-		this.traits.forEach((trait) => {
+		for (const trait of this.traits) {
 			trait.obstruct(this, side);
-		});
+		}
 	}
 
 	update(deltaTime) {
-		this.traits.forEach((trait) => {
+		for (const trait of this.traits) {
 			trait.update(this, deltaTime);
-		});
+		}
 	}
 }
