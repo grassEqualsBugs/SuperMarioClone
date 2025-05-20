@@ -3,6 +3,7 @@ import Camera from "./Camera.js";
 import { createLevelLoader } from "./loaders/level.js";
 import { loadEntities } from "./entities.js";
 import { setupKeyboard } from "./input.js";
+import { createCollisionLayer } from "./layers.js";
 
 const canvas = document.getElementById("screen");
 
@@ -22,6 +23,8 @@ async function main(canvas) {
 
 	const input = setupKeyboard(mario);
 	input.listenTo(window);
+
+	level.comp.layers.push(createCollisionLayer(level));
 
 	const camera = new Camera();
 	const timer = new Timer(1 / 60);

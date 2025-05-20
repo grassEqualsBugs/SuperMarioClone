@@ -13,11 +13,9 @@ export class Trait {
 		this.NAME = name;
 	}
 
+	collides(us, them) {}
 	obstruct() {}
-
-	update() {
-		console.warn("Unhandled update call in Trait");
-	}
+	update() {}
 }
 
 export default class Entity {
@@ -42,15 +40,21 @@ export default class Entity {
 		this[trait.NAME] = trait;
 	}
 
+	collides(candidate) {
+		for (const trait of this.traits) {
+			trait.collides(this, candidate);
+		}
+	}
+
 	obstruct(side) {
 		for (const trait of this.traits) {
 			trait.obstruct(this, side);
 		}
 	}
 
-	update(deltaTime) {
+	update(deltaTime, level) {
 		for (const trait of this.traits) {
-			trait.update(this, deltaTime);
+			trait.update(this, deltaTime, level);
 		}
 		this.lifetime += deltaTime;
 	}
