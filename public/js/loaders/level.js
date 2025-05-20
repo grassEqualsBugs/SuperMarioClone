@@ -7,7 +7,12 @@ export async function loadLevel(name) {
 	const backgroundSprites = await loadSpriteSheet(levelSpec.spritesheet);
 
 	const level = new Level();
-	createTiles(level, levelSpec.tiles, levelSpec.patterns);
+	for (const { tile, x, y } of expandTiles(
+		levelSpec.tiles,
+		levelSpec.patterns,
+	)) {
+		level.tiles.set(x, y, { name: tile.name, type: tile.type });
+	}
 
 	// add background layer to Compositor
 	const backgroundLayer = createBackgroundLayer(level, backgroundSprites);
@@ -41,28 +46,37 @@ function expandRange(range) {
 	}
 }
 
-function createTiles(level, tiles, patterns, offsetX = 0, offsetY = 0) {
-	tiles.forEach((tile) => {
-		tile.ranges.forEach((range) => {
-			for (const { x, y } of expandRange(range)) {
+function* expandRanges(ranges) {
+	for (const range of ranges) {
+		for (const item of expandRange(range)) {
+			yield item;
+		}
+	}
+}
+
+function expandTiles(tiles, patterns) {
+	const expandedTiles = [];
+
+	function walkTiles(tiles, offsetX, offsetY) {
+		for (const tile of tiles) {
+			for (const { x, y } of expandRanges(tile.ranges)) {
 				const derivedX = x + offsetX;
 				const derivedY = y + offsetY;
 
 				if (tile.pattern) {
-					createTiles(
-						level,
-						patterns[tile.pattern].tiles,
-						patterns,
-						derivedX,
-						derivedY,
-					);
+					walkTiles(patterns[tile.pattern].tiles, derivedX, derivedY);
 				} else {
-					level.tiles.set(derivedX, derivedY, {
-						name: tile.name,
-						type: tile.type,
+					expandedTiles.push({
+						tile,
+						x: derivedX,
+						y: derivedY,
 					});
 				}
 			}
-		});
-	});
+		}
+	}
+
+	walkTiles(tiles, 0, 0);
+
+	return expandedTiles;
 }
