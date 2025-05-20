@@ -2,6 +2,7 @@ import Entity, { Trait } from "../Entity.js";
 import { loadSpriteSheet } from "../loaders.js";
 import PendulumMove from "../traits/PendulumMove.js";
 import Killable from "../traits/Killable.js";
+import Solid from "../traits/Solid.js";
 
 export async function loadKoopa() {
 	const sprite = await loadSpriteSheet("koopa");
@@ -52,7 +53,7 @@ class Behavior extends Trait {
 		} else if (this.state === STATE_HIDING) {
 			us.killable.kill();
 			us.vel.set(100, -200);
-			us.canCollide = false;
+			us.solid.obstructs = false;
 		}
 	}
 
@@ -109,6 +110,7 @@ function createKoopaFactory(sprite) {
 		koopa.size.set(16, 16);
 		koopa.collisionOffset.y = 8;
 
+		koopa.addTrait(new Solid());
 		koopa.addTrait(new PendulumMove());
 		koopa.addTrait(new Killable());
 		koopa.killable.removeAfter = 2;

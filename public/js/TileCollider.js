@@ -26,18 +26,12 @@ export default class TileCollider {
 			if (match.tile.type !== "ground") return;
 			if (entity.vel.x > 0) {
 				if (entity.bounds.right > match.x1) {
-					entity.bounds.right = match.x1;
-					entity.vel.x = 0;
+					entity.obstruct(Sides.RIGHT, match);
 				}
-
-				entity.obstruct(Sides.RIGHT);
 			} else if (entity.vel.x < 0) {
 				if (entity.bounds.left < match.x2) {
-					entity.bounds.left = match.x2;
-					entity.vel.x = 0;
+					entity.obstruct(Sides.LEFT, match);
 				}
-
-				entity.obstruct(Sides.LEFT);
 			}
 		});
 	}
@@ -62,17 +56,11 @@ export default class TileCollider {
 			if (match.tile.type !== "ground") return;
 			if (entity.vel.y > 0) {
 				if (entity.bounds.bottom > match.y1) {
-					entity.bounds.bottom = match.y1;
-					entity.vel.y = 0;
-
-					entity.obstruct(Sides.BOTTOM);
+					entity.obstruct(Sides.BOTTOM, match);
 				}
 			} else if (entity.vel.y < 0) {
 				if (entity.bounds.top < match.y2) {
-					entity.bounds.top = match.y2;
-					entity.vel.y = 0;
-
-					entity.obstruct(Sides.TOP);
+					entity.obstruct(Sides.TOP, match);
 				}
 			}
 		});

@@ -42,7 +42,6 @@ export default class Entity {
 
 		this.traits = [];
 
-		this.canCollide = true;
 		this.lifetime = 0;
 	}
 
@@ -57,9 +56,9 @@ export default class Entity {
 		}
 	}
 
-	obstruct(side) {
+	obstruct(side, match) {
 		for (const trait of this.traits) {
-			trait.obstruct(this, side);
+			trait.obstruct(this, side, match);
 		}
 	}
 
