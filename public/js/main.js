@@ -36,7 +36,7 @@ async function main(canvas) {
 	input.listenTo(window);
 
 	// debug collision layer
-	level.comp.layers.push(createCollisionLayer(level));
+	// level.comp.layers.push(createCollisionLayer(level));
 
 	// start game
 	const camera = new Camera();
