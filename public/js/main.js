@@ -13,6 +13,7 @@ function createPlayerEnv(playerEntity) {
 	playerControl.checkpoint.set(64, 64);
 	playerEnv.addTrait(playerControl);
 	playerControl.setPlayer(playerEntity);
+	playerEnv.activated = true;
 	return playerEnv;
 }
 
@@ -25,6 +26,8 @@ async function main(canvas) {
 	const levelLoader = createLevelLoader(entityFactory);
 
 	const level = await levelLoader("1-1");
+	const camera = new Camera();
+	level.setCamera(camera);
 
 	// setup mario
 	const mario = entityFactory.mario();
@@ -36,15 +39,14 @@ async function main(canvas) {
 	input.listenTo(window);
 
 	// debug collision layer
-	// level.comp.layers.push(createCollisionLayer(level));
+	level.comp.layers.push(createCollisionLayer(level));
 
 	// start game
-	const camera = new Camera();
 	const timer = new Timer(1 / 60);
 	timer.update = function update(deltaTime) {
 		level.update(deltaTime);
 		camera.pos.x = Math.max(0, mario.pos.x - 100);
-		level.comp.draw(context, camera);
+		level.draw(context);
 	};
 
 	timer.start();

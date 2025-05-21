@@ -41,7 +41,7 @@ export default class Entity {
 		);
 
 		this.traits = [];
-
+		this.activated = false;
 		this.lifetime = 0;
 	}
 

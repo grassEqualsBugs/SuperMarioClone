@@ -77,6 +77,42 @@
 		{
 			"name": "cloud-2-3",
 			"index": [2, 21]
+		},
+		{
+			"name": "hill-top",
+			"index": [9, 8]
+		},
+		{
+			"name": "hill-dots-right",
+			"index": [8, 9]
+		},
+		{
+			"name": "hill-dots-left",
+			"index": [10, 9]
+		},
+		{
+			"name": "hill-angle-left",
+			"index": [8, 8]
+		},
+		{
+			"name": "hill-angle-right",
+			"index": [10, 8]
+		},
+		{
+			"name": "hill",
+			"index": [9, 9]
+		},
+		{
+			"name": "bush-left",
+			"index": [11, 9]
+		},
+		{
+			"name": "bush-middle",
+			"index": [12, 9]
+		},
+		{
+			"name": "bush-right",
+			"index": [13, 9]
 		}
 	],
 
